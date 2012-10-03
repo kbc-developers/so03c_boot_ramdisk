@@ -100,6 +100,25 @@ on fs
     mount yaffs2 mtd@userdata /data nosuid nodev
     mount yaffs2 mtd@cache /cache nosuid nodev
 
+# create kernel module symbolic link
+    mount tmpfs tmpfs /system/lib/modules
+
+    mkdir /system/lib/modules/compat 0755 root root
+    symlink /lib/modules/compat.ko /system/lib/modules/compat/compat.ko
+
+    mkdir /system/lib/modules/drivers 0755 root root
+    mkdir /system/lib/modules/drivers/net 0755 root root
+    mkdir /system/lib/modules/drivers/net/wireless 0755 root root
+    mkdir /system/lib/modules/drivers/net/wireless/wl12xx 0755 root root
+    symlink /lib/modules/wl12xx.ko /system/lib/modules/drivers/net/wireless/wl12xx/wl12xx.ko
+    symlink /lib/modules/wl12xx_sdio.ko /system/lib/modules/drivers/net/wireless/wl12xx/wl12xx_sdio.ko
+
+    mkdir /system/lib/modules/net 0755 root root
+    mkdir /system/lib/modules/net/mac80211 0755 root root
+    symlink /lib/modules/mac80211.ko /system/lib/modules/net/mac80211/mac80211.ko
+    mkdir /system/lib/modules/net/wireless 0755 root root
+    symlink /lib/modules/cfg80211.ko /system/lib/modules/net/wireless/cfg80211.ko
+
 on early-init
     export EXTERNAL_STORAGE /mnt/sdcard
     mkdir /mnt/sdcard 0000 system system
