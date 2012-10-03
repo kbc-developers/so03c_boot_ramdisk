@@ -1,93 +1,116 @@
 #!/system/bin/sh
-# *********************************************************************
-# *  ____                      _____      _                           *
-# * / ___|  ___  _ __  _   _  | ____|_ __(_) ___ ___ ___  ___  _ __   *
-# * \___ \ / _ \| '_ \| | | | |  _| | '__| |/ __/ __/ __|/ _ \| '_ \  *
-# *  ___) | (_) | | | | |_| | | |___| |  | | (__\__ \__ \ (_) | | | | *
-# * |____/ \___/|_| |_|\__, | |_____|_|  |_|\___|___/___/\___/|_| |_| *
-# *                    |___/                                          *
-# *                                                                   *
-# *********************************************************************
-# * Copyright 2010 Sony Ericsson Mobile Communications AB.            *
-# * All rights, including trade secret rights, reserved.              *
-# *********************************************************************
-#
 
 TAG="usb"
-USB_FUNC_TABLE="/system/etc/usbmode.table"
-COMMENT="#"
+VENDOR_ID=0FCE
+PID_PREFIX=0
+ADB_ENABLE=0
+ENG_ENABLE=0
 
-comp()
+get_pid_prefix()
 {
   case $1 in
-    $2)
-      return 0
+    "mass_storage")
+      PID_PREFIX=E
+      ;;
+
+    "mass_storage,adb")
+      PID_PREFIX=6
+      ADB_ENABLE=1
+      ;;
+
+    "mtp")
+      PID_PREFIX=0
+      ;;
+
+    "mtp,adb")
+      PID_PREFIX=5
+      ADB_ENABLE=1
+      ;;
+
+    "mtp,cdrom")
+      PID_PREFIX=4
+      ;;
+
+    "mtp,cdrom,adb")
+      PID_PREFIX=4
+      USB_FUNCTION="mtp,cdrom"
+      ;;
+
+    "rndis")
+      PID_PREFIX=7
+      ;;
+
+    "rndis,adb")
+      PID_PREFIX=8
+      ADB_ENABLE=1
+      ;;
+
+    *)
+      /system/bin/log -t ${TAG} -p e "unsupported composition: $1"
+      return 1
       ;;
   esac
-  return 1
+
+  return 0
 }
 
-ADB_PROP=$(/system/bin/getprop persist.service.adb.enable)
+set_engpid()
+{
+  case $1 in
+    "mass_storage,adb") PID_PREFIX=6 ;;
+    "mtp,adb") PID_PREFIX=5 ;;
+    *)
+      /system/bin/log -t ${TAG} -p i "No eng PID for: $1"
+      return 1
+      ;;
+  esac
+
+  PID=${PID_PREFIX}146
+  ENG_ENABLE=1
+  USB_FUNCTION=${1},modem,nmea,diag
+
+  return 0
+}
+
+PID_SUFFIX_PROP=$(/system/bin/getprop ro.usb.pid_suffix)
+USB_CONFIG_PROP=$(/system/bin/getprop sys.usb.config)
 ENG_PROP=$(/system/bin/getprop persist.usb.eng)
-RNDIS_PROP=$(/system/bin/getprop usb.rndis.enable)
-PCC_PROP=$(/system/bin/getprop usb.pcc.enable)
-STORAGE_PROP=$(/system/bin/getprop persist.usb.storagemode)
+USB_FUNCTION=${USB_CONFIG_PROP}
 
-PROP="${ADB_PROP:-0}${ENG_PROP:-0}${RNDIS_PROP:-0}${PCC_PROP:-0}"
-STORAGEMODE_PROP="${STORAGE_PROP:-msc}"
+get_pid_prefix ${USB_CONFIG_PROP}
+if [ $? -eq 1 ] ; then
+  exit 1
+fi
 
-while read LINE
-do
+PID=${PID_PREFIX}${PID_SUFFIX_PROP}
 
-  set -- $LINE
+if [ ${ENG_PROP} -eq 1 ] ; then
+  set_engpid ${USB_FUNCTION}
+fi
 
-  if comp $1 $COMMENT ; then
-    continue
-  fi
+echo 0 > /sys/class/android_usb/android0/enable
+echo ${VENDOR_ID} > /sys/class/android_usb/android0/idVendor
 
-  if ! comp $1 $STORAGEMODE_PROP ; then
-    continue
-  fi
+echo ${PID} > /sys/class/android_usb/android0/idProduct
+/system/bin/log -t ${TAG} -p i "usb product id: ${PID}"
 
-  if ! comp $2 $PROP ; then
-    continue
-  fi
+echo ${USB_FUNCTION} > /sys/class/android_usb/android0/functions
+/system/bin/log -t ${TAG} -p i "enabled usb functions: ${USB_FUNCTION}"
 
-  RNDIS=$3
-  MSC=$4
-  MTP=$5
-  ADB=$6
-  MODEM=$7
-  NMEA=$8
-  DIAG=$9
-  USBSTATE=$10
+echo 1 > /sys/class/android_usb/android0/enable
 
-  if comp $MODEM "1" ; then
-    /system/bin/start port-bridge
-  else
-    /system/bin/stop port-bridge
-  fi
+if [ ${ENG_ENABLE} -eq 1 ] ; then
+  /system/bin/start port-bridge
+else
+  /system/bin/stop port-bridge
+fi
 
-  if comp $ADB "1" ; then
-    /system/bin/start adbd
-  else
-    /system/bin/stop adbd
-  fi
+if [ ${ADB_ENABLE} -eq 1 ] ; then
+  /system/bin/start adbd
+else
+  /system/bin/stop adbd
+fi
 
-  echo $RNDIS > /sys/class/usb_composite/rndis/enable
-  echo $MSC > /sys/class/usb_composite/usb_mass_storage/enable
-  echo $MTP > /sys/class/usb_composite/mtp/enable
-  echo $MODEM > /sys/class/usb_composite/modem/enable
-  echo $NMEA > /sys/class/usb_composite/nmea/enable
-  echo $DIAG > /sys/class/usb_composite/diag/enable
-  echo "0" > /sys/class/usb_composite/accessory/enable
+/system/bin/setprop sys.usb.state ${USB_CONFIG_PROP}
 
-  /system/bin/log -t $TAG -p d "USB STATE: $USBSTATE"
-
-  exit 0
-
-done < $USB_FUNC_TABLE
-
-/system/bin/log -t $TAG -p e "There is no matching USB mode:$PROP"
-
-exit 1
+exit 0
