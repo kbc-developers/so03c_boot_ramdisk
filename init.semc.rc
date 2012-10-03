@@ -95,34 +95,9 @@ on fs
 
 # create kernel module symbolic link
     mount tmpfs tmpfs /system/lib/modules
-
-    symlink /lib/modules/compat.ko /system/lib/modules/compat.ko
-    symlink /lib/modules/compat_firmware_class.ko /system/lib/modules/compat_firmware_class.ko
-    symlink /lib/modules/wl12xx.ko /system/lib/modules/wl12xx.ko
-    symlink /lib/modules/wl12xx_sdio.ko /system/lib/modules/wl12xx_sdio.ko
-    symlink /lib/modules/mac80211.ko /system/lib/modules/mac80211.ko
-    symlink /lib/modules/cfg80211.ko /system/lib/modules/cfg80211.ko
-    symlink /lib/modules/mtd_pagetest.ko /system/lib/modules/mtd_pagetest.ko
-    symlink /lib/modules/mtd_subpagetest.ko /system/lib/modules/mtd_subpagetest.ko
-    symlink /lib/modules/mtd_stresstest.ko /system/lib/modules/mtd_stresstest.ko
-    symlink /lib/modules/mtd_torturetest.ko /system/lib/modules/mtd_torturetest.ko
-    symlink /lib/modules/mtd_speedtest.ko /system/lib/modules/mtd_speedtest.ko
-    symlink /lib/modules/mtd_readtest.ko /system/lib/modules/mtd_readtest.ko
-    symlink /lib/modules/mtd_erasepart.ko /system/lib/modules/mtd_erasepart.ko
-    symlink /lib/modules/mtd_oobtest.ko /system/lib/modules/mtd_oobtest.ko
-    symlink /lib/modules/evbug.ko /system/lib/modules/evbug.ko
-    symlink /lib/modules/mmc_test.ko /system/lib/modules/mmc_test.ko
-    symlink /lib/modules/pmem_kernel_test.ko /system/lib/modules/pmem_kernel_test.ko
-    symlink /lib/modules/librasdioif.ko /system/lib/modules/librasdioif.ko
-    symlink /lib/modules/scsi_wait_scan.ko /system/lib/modules/scsi_wait_scan.ko
-    symlink /lib/modules/cpaccess.ko /system/lib/modules/cpaccess.ko
-    symlink /lib/modules/reset_modem.ko /system/lib/modules/reset_modem.ko
-    symlink /lib/modules/dal_remotetest.ko /system/lib/modules/dal_remotetest.ko
-    symlink /lib/modules/dma_test.ko /system/lib/modules/dma_test.ko
-    symlink /lib/modules/oprofile.ko /system/lib/modules/oprofile.ko
-    symlink /lib/modules/sch_dsmark.ko /system/lib/modules/sch_dsmark.ko
-    symlink /lib/modules/cls_flow.ko /system/lib/modules/cls_flow.ko
-    symlink /lib/modules/ansi_cprng.ko /system/lib/modules/ansi_cprng.ko
+    symlink /lib/modules/tiap_drv.ko /system/lib/modules/tiap_drv.ko
+    symlink /lib/modules/tiwlan_drv.ko /system/lib/modules/tiwlan_drv.ko
+    symlink /lib/modules/sdio.ko /system/lib/modules/sdio.ko
 
 on boot
     
