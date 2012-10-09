@@ -50,22 +50,22 @@ export PATH=/sbin
 #fi
 
 
-#mkdir -p /tmp/mnt/system
-#mknod /tmp/mtdblock0 b 31 0
-#mount -t yaffs2 /tmp/mtdblock0 /tmp/mnt/system
+mkdir -p /tmp/mnt/system
+mknod /tmp/mtdblock0 b 31 0
+mount -t yaffs2 /tmp/mtdblock0 /tmp/mnt/system
 
-#if [ -f /tmp/mnt/system/framework/SemcGenericUxpRes.apk ]; then
-#    ROM_TYPE=0
-#else
-#    ROM_TYPE=1
-#fi
+if [ -f /tmp/mnt/system/framework/SemcGenericUxpRes.apk ]; then
+    ROM_TYPE=0
+else
+    ROM_TYPE=1
+fi
 
-#umount /tmp/mnt/system
-#rm /tmp/mtdblock0
-#rm -rf /tmp/mnt
+umount /tmp/mnt/system
+rm /tmp/mtdblock0
+rm -rf /tmp/mnt
 
 
-#if [ $ROM_TYPE = 0 ]; then
+if [ $ROM_TYPE = 0 ]; then
     mv /sbin/semc-ics/init /init
     chown root.root /init
     chmod 750 /init
@@ -89,7 +89,7 @@ export PATH=/sbin
     mv /sbin/semc-ics/default.prop /default.prop
     chown root.root /default.prop
     chmod 644 /default.prop
-#fi
+fi
 
 
 export PATH=$PATH_
