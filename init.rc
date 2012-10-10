@@ -414,9 +414,9 @@ service drm /system/bin/drmserver
     user drm
     group system inet drmrpc
 
-service bootanim /system/bin/bootanimation
+service bootanim /sbin/bootanimation
     class main
-    user graphics
+    user root
     group graphics
     disabled
     oneshot
