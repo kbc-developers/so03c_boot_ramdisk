@@ -10,8 +10,6 @@ mount -t yaffs2 /tmp/mtdblock2 /tmp/mnt/cache
 if [ -f /tmp/mnt/cache/recovery/boot ]; then
     RECOVERY_MODE=1
     rm /tmp/mnt/cache/recovery/boot
-elif [ -s /dev/keycheck ]; then
-    RECOVERY_MODE=1
 else
     RECOVERY_MODE=0
 fi

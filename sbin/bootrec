@@ -26,7 +26,7 @@ then
   mkdir /tmp
   rm /etc
   mkdir /etc
-  cp /recovery.fstab /etc/recovery.fstab
+  cp /sbin/recovery-ics/recovery.fstab /etc/recovery.fstab
   mount /dev/block/mmcblk0p1 /sdcard
   /sbin/recovery&
 fi
