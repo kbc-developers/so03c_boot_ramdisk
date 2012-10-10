@@ -12,6 +12,8 @@ if [ -s /dev/keycheck -o -e /cache/recovery/boot ]; then
   echo 1 > /sys/class/android_usb/android0/enable
   stop adbd
 
+  echo 1 > /sys/devices/virtual/input/input2/notify_up_event
+
   rm /cache/recovery/boot
   mount -o remount,rw rootfs /
   umount -l /system
