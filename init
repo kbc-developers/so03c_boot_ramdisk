@@ -48,18 +48,19 @@ export PATH=/sbin
 #    exec /init
 #fi
 
-
-mkdir -p /tmp/mnt/system
+SYS_PATH=/tmp/mnt/system
+mkdir -p $SYS_PATH
 mknod /tmp/mtdblock0 b 31 0
-mount -t yaffs2 /tmp/mtdblock0 /tmp/mnt/system
+mount -t yaffs2 /tmp/mtdblock0 $SYS_PATH
 
 if [ -f /tmp/mnt/system/framework/SemcGenericUxpRes.apk ]; then
     ROM_TYPE=0
 else
     ROM_TYPE=1
 fi
+SDK_VER=`grep ro\.build\.version\.sdk $SYS_PATH_/build.prop | cut -d'=' -f2`
 
-umount /tmp/mnt/system
+umount $SYS_PATH
 rm /tmp/mtdblock0
 rm -rf /tmp/mnt
 
@@ -88,6 +89,88 @@ if [ $ROM_TYPE = 0 ]; then
     mv /sbin/semc-ics/default.prop /default.prop
     chown root.root /default.prop
     chmod 644 /default.prop
+elif [ "$SDK_VER_" = '16' ]; then
+
+    mv /sbin/aosp-ics/init /init
+    chown root.root /init
+    chmod 750 /init
+
+    mv /sbin/aosp-ics/init.rc /init.rc
+    chown root.root /init.rc
+    chmod 750 /init.rc
+
+    mv /sbin/aosp-ics/init.semc.rc /init.semc.rc
+    chown root.root /init.semc.rc
+    chmod 750 /init.semc.rc
+
+    mv /sbin/aosp-ics/init.semc.usb.rc /init.semc.usb.rc
+    chown root.root /init.semc.usb.rc
+    chmod 750 /init.semc.usb.rc
+
+    mv /sbin/aosp-ics/ueventd.rc /ueventd.rc
+    chown root.root /ueventd.rc
+    chmod 644 /ueventd.rc
+
+    mv /sbin/aosp-ics/ueventd.semc.rc /ueventd.semc.rc
+    chown root.root /ueventd.semc.rc
+    chmod 644 /ueventd.semc.rc
+
+    mv /sbin/aosp-ics/default.prop /default.prop
+    chown root.root /default.prop
+    chmod 644 /default.prop
+
+else
+
+    #adbd
+
+    mv /sbin/aosp-jb/bootrec /sbin/bootrec
+    chown root.root /sbin/bootrec
+    chmod 750 /sbin/bootrec
+
+    mv /sbin/aosp-jb/fillers /fillers
+    chown root.root /fillers
+    chmod 750 /fillers
+
+    mv /sbin/aosp-jb/init /init
+    chown root.root /init
+    chmod 750 /init
+
+    mv /sbin/aosp-jb/init.rc /init.rc
+    chown root.root /init.rc
+    chmod 750 /init.rc
+
+    mv /sbin/aosp-jb/init.semc.rc /init.semc.rc
+    chown root.root /init.semc.rc
+    chmod 750 /init.semc.rc
+
+    mv /sbin/aosp-jb/init.semc.usb.rc /init.semc.usb.rc
+    chown root.root /init.semc.usb.rc
+    chmod 750 /init.semc.usb.rc
+
+    mv /sbin/aosp-jb/fstab.semc /fstab.semc
+    chown root.root /fstab.semc
+    chmod 644 /fstab.semc
+
+    mv /sbin/aosp-jb/init.trace.rc /init.trace.rc
+    chown root.root /init.trace.rc
+    chmod 750 /init.trace.rc
+
+    mv /sbin/aosp-jb/init.usb.rc /init.usb.rc
+    chown root.root /init.usb.rc
+    chmod 750 /init.usb.rc
+
+    mv /sbin/aosp-jb/ueventd.rc /ueventd.rc
+    chown root.root /ueventd.rc
+    chmod 644 /ueventd.rc
+
+    mv /sbin/aosp-jb/ueventd.semc.rc /ueventd.semc.rc
+    chown root.root /ueventd.semc.rc
+    chmod 644 /ueventd.semc.rc
+
+    mv /sbin/aosp-jb/default.prop /default.prop
+    chown root.root /default.prop
+    chmod 644 /default.prop
+
 fi
 
 
