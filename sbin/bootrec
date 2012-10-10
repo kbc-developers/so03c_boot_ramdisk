@@ -1,12 +1,10 @@
 #!/sbin/sh
 setprop service.adb.root 1
-if [ -e /sbin/bootrec-device ]
-then
+if [ -e /sbin/bootrec-device ]; then
   /sbin/bootrec-device
 fi
 
-if [ -s /dev/keycheck -o -e /cache/recovery/boot ]
-then
+if [ -s /dev/keycheck -o -e /cache/recovery/boot ]; then
   echo 0 > /sys/class/android_usb/android0/enable
   echo 0fce > /sys/class/android_usb/android0/idVendor 
   echo 614f > /sys/class/android_usb/android0/idProduct
