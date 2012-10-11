@@ -1,6 +1,9 @@
 import init.semc.usb.rc
 
 on early-boot
+    write /proc/sys/kernel/fixed_fb_offset 0
+    write /proc/sys/kernel/feature_aosp 1
+
     #Run pre_hw_config.sh before entering charge only mode.
     exec /sbin/sh /system/etc/pre_hw_config.sh
     #offline charging

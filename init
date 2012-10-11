@@ -3,51 +3,6 @@
 PATH_=$PATH
 export PATH=/sbin
 
-#mkdir -p /tmp/mnt/cache
-#mknod /tmp/mtdblock2 b 31 2
-#mount -t yaffs2 /tmp/mtdblock2 /tmp/mnt/cache
-
-#if [ -f /tmp/mnt/cache/recovery/boot ]; then
-#    RECOVERY_MODE=1
-#    rm /tmp/mnt/cache/recovery/boot
-#else
-#    RECOVERY_MODE=0
-#fi
-
-#umount /tmp/mnt/cache
-#rm /tmp/mtdblock2
-
-
-#if [ $RECOVERY_MODE = 1 ]; then
-#    mv /sbin/recovery-ics/init /init
-#    chown root.root /init
-#    chmod 750 /init
-
-#    mv /sbin/recovery-ics/init.rc /init.rc
-#    chown root.root /init.rc
-#    chmod 750 /init.rc
-
-#    mkdir /etc
-#    mv /sbin/recovery-ics/recovery.fstab /etc/recovery.fstab
-#    chown root.root /etc/recovery.fstab
-#    chmod 644 /etc/recovery.fstab
-
-#    mv /sbin/recovery-ics/ueventd.rc /ueventd.rc
-#    chown root.root /ueventd.rc
-#    chmod 644 /ueventd.rc
-
-#    mv /sbin/recovery-ics/ueventd.semc.rc /ueventd.semc.rc
-#    chown root.root /ueventd.semc.rc
-#    chmod 644 /ueventd.semc.rc
-
-#    mv /sbin/recovery-ics/default.prop /default.prop
-#    chown root.root /default.prop
-#    chmod 644 /default.prop
-
-#    export PATH=$PATH_
-#    exec /init
-#fi
-
 SYS_PATH=/tmp/mnt/system
 mkdir -p $SYS_PATH
 mknod /tmp/mtdblock0 b 31 0
@@ -67,7 +22,7 @@ rm -rf /tmp/mnt
 
 if [ $ROM_TYPE = 0 ]; then
 
-    echo 0 > /proc/sys/kernel/feature_aosp
+    #echo 0 > /proc/sys/kernel/feature_aosp
 
     mv /sbin/semc-ics/init /init
     chown root.root /init
@@ -105,9 +60,9 @@ if [ $ROM_TYPE = 0 ]; then
     chown root.root /init.usbmode.sh
     chmod 750 /init.usbmode.sh
 
-elif [ "$SDK_VER_" = '16' ]; then
+elif [ "$SDK_VER" = '16' ]; then
 
-    echo 1 > /proc/sys/kernel/feature_aosp
+    #echo 1 > /proc/sys/kernel/feature_aosp
 
     mv /sbin/aosp-ics/init /init
     chown root.root /init
@@ -139,8 +94,8 @@ elif [ "$SDK_VER_" = '16' ]; then
 
 else
 
-    echo 0 > /proc/sys/kernel/fixed_fb_offset
-    echo 1 > /proc/sys/kernel/feature_aosp
+    #echo 0 > /proc/sys/kernel/fixed_fb_offset
+    #echo 1 > /proc/sys/kernel/feature_aosp
 
     mv /sbin/aosp-jb/bootrec /sbin/adbd
     chown root.root /sbin/adbd
