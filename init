@@ -89,6 +89,19 @@ if [ $ROM_TYPE = 0 ]; then
     mv /sbin/semc-ics/default.prop /default.prop
     chown root.root /default.prop
     chmod 644 /default.prop
+
+    mv /sbin/semc-ics/init.clrdex.sh /init.clrdex.sh
+    chown root.root /init.clrdex.sh
+    chmod 750 /init.clrdex.sh
+
+    mv /sbin/semc-ics/init.hostapd.sh /init.hostapd.sh
+    chown root.root /init.hostapd.sh
+    chmod 750 /init.hostapd.sh
+
+    mv /sbin/semc-ics/init.usbmode.sh /init.usbmode.sh
+    chown root.root /init.usbmode.sh
+    chmod 750 /init.usbmode.sh
+
 elif [ "$SDK_VER_" = '16' ]; then
 
     mv /sbin/aosp-ics/init /init
@@ -120,6 +133,8 @@ elif [ "$SDK_VER_" = '16' ]; then
     chmod 644 /default.prop
 
 else
+
+    echo 0 > /proc/sys/kernel/fixed_fb_offset
 
     #adbd
 
