@@ -67,6 +67,8 @@ rm -rf /tmp/mnt
 
 if [ $ROM_TYPE = 0 ]; then
 
+    echo 0 > /proc/sys/kernel/feature_aosp
+
     mv /sbin/semc-ics/init /init
     chown root.root /init
     chmod 750 /init
@@ -105,6 +107,8 @@ if [ $ROM_TYPE = 0 ]; then
 
 elif [ "$SDK_VER_" = '16' ]; then
 
+    echo 1 > /proc/sys/kernel/feature_aosp
+
     mv /sbin/aosp-ics/init /init
     chown root.root /init
     chmod 750 /init
@@ -136,6 +140,7 @@ elif [ "$SDK_VER_" = '16' ]; then
 else
 
     echo 0 > /proc/sys/kernel/fixed_fb_offset
+    echo 1 > /proc/sys/kernel/feature_aosp
 
     mv /sbin/aosp-jb/bootrec /sbin/adbd
     chown root.root /sbin/adbd
