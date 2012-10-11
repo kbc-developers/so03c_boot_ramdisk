@@ -4,6 +4,8 @@ import init.semc.keyboard.rc
 on early-boot
     #Run pre_hw_config.sh before entering charge only mode.
     exec /sbin/sh /system/etc/pre_hw_config.sh
+    #offline charging
+    exec /system/bin/chargemon
     # Boot into recovery
     exec /sbin/bootrec
 

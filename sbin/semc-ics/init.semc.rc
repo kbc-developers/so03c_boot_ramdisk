@@ -20,6 +20,8 @@ on post-fs
 on early-boot
     #Run pre_hw_config.sh before entering charge only mode.
     exec /system/bin/sh /system/etc/pre_hw_config.sh
+    #offline charging
+    exec /system/bin/chargemon
     # Boot into recovery
     exec /sbin/bootrec
 

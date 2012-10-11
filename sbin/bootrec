@@ -1,36 +1,241 @@
 #!/sbin/sh
+
 setprop service.adb.root 1
 if [ -e /sbin/bootrec-device ]; then
-  /sbin/bootrec-device
+    /sbin/bootrec-device
 fi
 
 if [ -s /dev/keycheck -o -e /cache/recovery/boot ]; then
-  echo 0 > /sys/class/android_usb/android0/enable
-  echo 0fce > /sys/class/android_usb/android0/idVendor 
-  echo 614f > /sys/class/android_usb/android0/idProduct
-  echo "mass_storage,adb" > /sys/class/android_usb/android0/functions
-  echo 1 > /sys/class/android_usb/android0/enable
-  stop adbd
+    echo 0 > /sys/class/android_usb/android0/enable
+    echo 0fce > /sys/class/android_usb/android0/idVendor 
+    echo 614f > /sys/class/android_usb/android0/idProduct
+    echo "mass_storage,adb" > /sys/class/android_usb/android0/functions
+    echo 1 > /sys/class/android_usb/android0/enable
+    stop adbd
 
-  echo 1 > /sys/devices/virtual/input/input2/notify_up_event
+    echo 1 > /sys/devices/virtual/input/input2/notify_up_event
+    echo 1 > /proc/sys/kernel/fixed_fb_offset
 
-  rm /cache/recovery/boot
-  mount -o remount,rw rootfs /
-  umount -l /system
-  umount -l /data
-  umount -l /cache
-  umount -l /mnt/sdcard
-  rm -r /sdcard
-  rm -r /not/sdcard
-  mkdir /sdcard
-  mkdir /tmp
-  rm /etc
-  mkdir /etc
-  cp /sbin/recovery-ics/recovery.fstab /etc/recovery.fstab
-  mount /dev/block/mmcblk0p1 /sdcard
-  /sbin/recovery&
+    rm /cache/recovery/boot
+    mount -o remount,rw rootfs /
+    umount -l /system
+    umount -l /data
+    umount -l /cache
+    umount -l /mnt/sdcard
+    rm -r /sdcard
+    rm -r /not/sdcard
+    mkdir /sdcard
+    mkdir /tmp
+    rm /etc
+    mkdir /etc
+    cp /sbin/recovery-ics/recovery.fstab /etc/recovery.fstab
+    mount /dev/block/mmcblk0p1 /sdcard
+    /sbin/recovery&
+else
+    mount -o remount,rw rootfs /
+
+    rm -rf /sbin/aosp-ics
+    rm -rf /sbin/aosp-jb
+    rm -rf /sbin/recovery-ics
+    rm -rf /sbin/semc-ics
+    rm -rf /sbin/scripts
+
+    rm /sbin/[
+    rm /sbin/[[
+    rm /sbin/ash
+    rm /sbin/awk
+    rm /sbin/basename
+    rm /sbin/bbconfig
+    rm /sbin/blkid
+    rm /sbin/bunzip2
+    rm /sbin/bzcat
+    rm /sbin/bzip2
+    rm /sbin/cal
+    rm /sbin/cat
+    rm /sbin/catv
+    rm /sbin/chattr
+    rm /sbin/chgrp
+    rm /sbin/chmod
+    rm /sbin/chown
+    rm /sbin/chroot
+    rm /sbin/cksum
+    rm /sbin/clear
+    rm /sbin/cmp
+    rm /sbin/cp
+    rm /sbin/cpio
+    rm /sbin/cut
+    rm /sbin/date
+    rm /sbin/dc
+    rm /sbin/dd
+    rm /sbin/depmod
+    rm /sbin/devmem
+    rm /sbin/df
+    rm /sbin/diff
+    rm /sbin/dirname
+    rm /sbin/dmesg
+    rm /sbin/dos2unix
+    rm /sbin/du
+    rm /sbin/echo
+    rm /sbin/egrep
+    rm /sbin/env
+    rm /sbin/expand
+    rm /sbin/expr
+    rm /sbin/false
+    rm /sbin/fdisk
+    rm /sbin/fgrep
+    rm /sbin/find
+    rm /sbin/fold
+    rm /sbin/free
+    rm /sbin/freeramdisk
+    rm /sbin/fuser
+    rm /sbin/getopt
+    rm /sbin/grep
+    rm /sbin/groups
+    rm /sbin/gunzip
+    rm /sbin/gzip
+    rm /sbin/head
+    rm /sbin/hexdump
+    rm /sbin/id
+    rm /sbin/insmod
+    rm /sbin/install
+    rm /sbin/kill
+    rm /sbin/killall
+    rm /sbin/killall5
+    rm /sbin/length
+    rm /sbin/less
+    rm /sbin/ln
+    rm /sbin/losetup
+    rm /sbin/ls
+    rm /sbin/lsattr
+    rm /sbin/lsmod
+    rm /sbin/lspci
+    rm /sbin/lsusb
+    rm /sbin/lzcat
+    rm /sbin/lzop
+    rm /sbin/lzopcat
+    rm /sbin/makedevs
+    rm /sbin/md5sum
+    rm /sbin/mkdir
+    rm /sbin/mkfifo
+    rm /sbin/mkfs.ext2
+    rm /sbin/mknod
+    rm /sbin/mkswap
+    rm /sbin/mktemp
+    rm /sbin/modinfo
+    rm /sbin/modprobe
+    rm /sbin/more
+    rm /sbin/mount
+    rm /sbin/mountpoint
+    rm /sbin/mv
+    rm /sbin/nanddump
+    rm /sbin/nandwrite
+    rm /sbin/nice
+    rm /sbin/nohup
+    rm /sbin/od
+    rm /sbin/patch
+    rm /sbin/pgrep
+    rm /sbin/pidof
+    rm /sbin/pkill
+    rm /sbin/printenv
+    rm /sbin/printf
+    rm /sbin/ps
+    rm /sbin/pstree
+    rm /sbin/pwd
+    rm /sbin/rdev
+    rm /sbin/readlink
+    rm /sbin/realpath
+    rm /sbin/renice
+    rm /sbin/reset
+    rm /sbin/resize
+    rm /sbin/rev
+    rm /sbin/rmdir
+    rm /sbin/rmmod
+    rm /sbin/run-parts
+    rm /sbin/sed
+    rm /sbin/seq
+    rm /sbin/setconsole
+    rm /sbin/setserial
+    rm /sbin/setsid
+    rm /sbin/sh
+    rm /sbin/sha1sum
+    rm /sbin/sha256sum
+    rm /sbin/sha512sum
+    rm /sbin/sleep
+    rm /sbin/sort
+    rm /sbin/split
+    rm /sbin/stat
+    rm /sbin/strings
+    rm /sbin/stty
+    rm /sbin/swapoff
+    rm /sbin/swapon
+    rm /sbin/sync
+    rm /sbin/sysctl
+    rm /sbin/tac
+    rm /sbin/tail
+    rm /sbin/tar
+    rm /sbin/tee
+    rm /sbin/test
+    rm /sbin/time
+    rm /sbin/top
+    rm /sbin/touch
+    rm /sbin/tr
+    rm /sbin/true
+    rm /sbin/ttysize
+    rm /sbin/umount
+    rm /sbin/uname
+    rm /sbin/unexpand
+    rm /sbin/uniq
+    rm /sbin/unix2dos
+    rm /sbin/unlzma
+    rm /sbin/unlzop
+    rm /sbin/unxz
+    rm /sbin/unzip
+    rm /sbin/uptime
+    rm /sbin/usleep
+    rm /sbin/uudecode
+    rm /sbin/uuencode
+    rm /sbin/watch
+    rm /sbin/wc
+    rm /sbin/which
+    rm /sbin/whoami
+    rm /sbin/xargs
+    rm /sbin/xzcat
+    rm /sbin/yes
+    rm /sbin/zcat
+
+    rm /sbin/fix_permissions
+    rm /sbin/e2fsck
+    rm /sbin/grabramdump
+    rm /sbin/killrecovery.sh
+    rm /sbin/mbs_init.sh
+    rm /sbin/mke2fs
+    rm /sbin/nandroid-md5.sh
+    rm /sbin/parted
+    rm /sbin/root_hacking
+    rm /sbin/sdparted
+    rm /sbin/tune2fs
+    rm /sbin/updater
+
+    rm /sbin/dedupe
+    rm /sbin/dump_image
+    rm /sbin/edify
+    rm /sbin/erase_image
+    rm /sbin/flash_image
+    rm /sbin/getprop
+    rm /sbin/minizip
+    rm /sbin/mkyaffs2image
+    rm /sbin/nandroid
+    rm /sbin/reboot
+    rm /sbin/setprop
+    rm /sbin/unyaffs
+    rm /sbin/volume
+
+    rm /sbin/rm
+    rm /sbin/busybox
+    rm /sbin/recovery
+
+    mount -o remount,ro rootfs /
 fi
 
-/system/bin/chargemon
 #continue booting
 

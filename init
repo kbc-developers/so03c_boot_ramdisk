@@ -66,6 +66,7 @@ rm -rf /tmp/mnt
 
 
 if [ $ROM_TYPE = 0 ]; then
+
     mv /sbin/semc-ics/init /init
     chown root.root /init
     chmod 750 /init
@@ -136,11 +137,9 @@ else
 
     echo 0 > /proc/sys/kernel/fixed_fb_offset
 
-    #adbd
-
-    mv /sbin/aosp-jb/bootrec /sbin/bootrec
-    chown root.root /sbin/bootrec
-    chmod 750 /sbin/bootrec
+    mv /sbin/aosp-jb/bootrec /sbin/adbd
+    chown root.root /sbin/adbd
+    chmod 750 /sbin/adbd
 
     mv /sbin/aosp-jb/fillers /fillers
     chown root.root /fillers
