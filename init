@@ -13,7 +13,7 @@ if [ -f /tmp/mnt/system/framework/SemcGenericUxpRes.apk ]; then
 else
     ROM_TYPE=1
 fi
-SDK_VER=`grep ro\.build\.version\.sdk $SYS_PATH_/build.prop | cut -d'=' -f2`
+SDK_VER=`grep ro\.build\.version\.sdk $SYS_PATH/build.prop | cut -d'=' -f2`
 
 umount $SYS_PATH
 rm /tmp/mtdblock0
@@ -21,8 +21,6 @@ rm -rf /tmp/mnt
 
 
 if [ $ROM_TYPE = 0 ]; then
-
-    #echo 0 > /proc/sys/kernel/feature_aosp
 
     mv /sbin/semc-ics/init /init
     chown root.root /init
@@ -61,41 +59,6 @@ if [ $ROM_TYPE = 0 ]; then
     chmod 750 /init.usbmode.sh
 
 elif [ "$SDK_VER" = '16' ]; then
-
-    #echo 1 > /proc/sys/kernel/feature_aosp
-
-    mv /sbin/aosp-ics/init /init
-    chown root.root /init
-    chmod 750 /init
-
-    mv /sbin/aosp-ics/init.rc /init.rc
-    chown root.root /init.rc
-    chmod 750 /init.rc
-
-    mv /sbin/aosp-ics/init.semc.rc /init.semc.rc
-    chown root.root /init.semc.rc
-    chmod 750 /init.semc.rc
-
-    mv /sbin/aosp-ics/init.semc.usb.rc /init.semc.usb.rc
-    chown root.root /init.semc.usb.rc
-    chmod 750 /init.semc.usb.rc
-
-    mv /sbin/aosp-ics/ueventd.rc /ueventd.rc
-    chown root.root /ueventd.rc
-    chmod 644 /ueventd.rc
-
-    mv /sbin/aosp-ics/ueventd.semc.rc /ueventd.semc.rc
-    chown root.root /ueventd.semc.rc
-    chmod 644 /ueventd.semc.rc
-
-    mv /sbin/aosp-ics/default.prop /default.prop
-    chown root.root /default.prop
-    chmod 644 /default.prop
-
-else
-
-    #echo 0 > /proc/sys/kernel/fixed_fb_offset
-    #echo 1 > /proc/sys/kernel/feature_aosp
 
     mv /sbin/aosp-jb/bootrec /sbin/adbd
     chown root.root /sbin/adbd
@@ -142,6 +105,36 @@ else
     chmod 644 /ueventd.semc.rc
 
     mv /sbin/aosp-jb/default.prop /default.prop
+    chown root.root /default.prop
+    chmod 644 /default.prop
+
+else
+
+    mv /sbin/aosp-ics/init /init
+    chown root.root /init
+    chmod 750 /init
+
+    mv /sbin/aosp-ics/init.rc /init.rc
+    chown root.root /init.rc
+    chmod 750 /init.rc
+
+    mv /sbin/aosp-ics/init.semc.rc /init.semc.rc
+    chown root.root /init.semc.rc
+    chmod 750 /init.semc.rc
+
+    mv /sbin/aosp-ics/init.semc.usb.rc /init.semc.usb.rc
+    chown root.root /init.semc.usb.rc
+    chmod 750 /init.semc.usb.rc
+
+    mv /sbin/aosp-ics/ueventd.rc /ueventd.rc
+    chown root.root /ueventd.rc
+    chmod 644 /ueventd.rc
+
+    mv /sbin/aosp-ics/ueventd.semc.rc /ueventd.semc.rc
+    chown root.root /ueventd.semc.rc
+    chmod 644 /ueventd.semc.rc
+
+    mv /sbin/aosp-ics/default.prop /default.prop
     chown root.root /default.prop
     chmod 644 /default.prop
 
