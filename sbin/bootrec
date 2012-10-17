@@ -30,6 +30,10 @@ if [ -s /dev/keycheck -o -e /cache/recovery/boot ]; then
     mkdir /etc
     cp /sbin/recovery-ics/recovery.fstab /etc/recovery.fstab
     mount /dev/block/mmcblk0p1 /sdcard
+
+	if [ -d /sdcard/clockworkmod/Tweak ]; then
+		cp -r /sdcard/clockworkmod/Tweak/* /res/
+	fi
     /sbin/recovery&
 else
     mount -o remount,rw rootfs /
