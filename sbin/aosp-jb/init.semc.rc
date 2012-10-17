@@ -28,6 +28,9 @@ on fs
 # create kernel module symbolic link
     mount tmpfs tmpfs /system/lib/modules
 
+    symlink /lib/modules/cifs.ko /system/lib/modules/cifs.ko
+    symlink /lib/modules/ntfs.ko /system/lib/modules/ntfs.ko
+    symlink /lib/modules/fuse.ko /system/lib/modules/fuse.ko
     symlink /lib/modules/compat.ko /system/lib/modules/compat.ko
     symlink /lib/modules/compat_firmware_class.ko /system/lib/modules/compat_firmware_class.ko
     symlink /lib/modules/cfg80211.ko /system/lib/modules/cfg80211.ko
