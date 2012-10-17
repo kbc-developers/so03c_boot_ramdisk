@@ -107,6 +107,10 @@ on fs
 # create kernel module symbolic link
     mount tmpfs tmpfs /system/lib/modules
 
+    symlink /lib/modules/cifs.ko /system/lib/modules/cifs.ko
+    symlink /lib/modules/ntfs.ko /system/lib/modules/ntfs.ko
+    symlink /lib/modules/fuse.ko /system/lib/modules/fuse.ko
+
     mkdir /system/lib/modules/compat 0755 root root
     symlink /lib/modules/compat.ko /system/lib/modules/compat/compat.ko
 
