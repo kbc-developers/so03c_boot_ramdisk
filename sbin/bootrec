@@ -31,8 +31,8 @@ if [ -s /dev/keycheck -o -e /cache/recovery/boot ]; then
     cp /sbin/recovery-ics/recovery.fstab /etc/recovery.fstab
     mount /dev/block/mmcblk0p1 /sdcard
 
-	if [ -d /sdcard/clockworkmod/Tweak ]; then
-		cp -r /sdcard/clockworkmod/Tweak/* /res/
+	if [ -d /sdcard/clockworkmod/theme ]; then
+		cp -r /sdcard/clockworkmod/theme/* /res/
 	fi
     /sbin/recovery&
 else
